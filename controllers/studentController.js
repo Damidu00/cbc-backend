@@ -1,30 +1,49 @@
 import Student from "../models/student.js"
 
-export function getallStudents (req,res){
-    Student.find().then((allstudents)=>{
+export async function getallStudents (req,res){
+    try{
+        const allStudents = await Student.find()
         res.json({
-            list : allstudents
+            list:allStudents
         })
-    })
+    }catch{
+        res.json({
+            message:"error"
+        })
+    }
+    
 }
 
-export function createStudent (req,res){
-    const student = new Student(req.body)
-    student.save().then(() =>{
+export async function createStudent (req,res){
+    try{
+        const student = new Student(req.body)
+        await student.save()
+        res.json({message: "student created"})
+    }catch{
         res.json({
-            message:"Student Created"
+            message : "Student not created",
+            error:error.message
         })
-    }).catch(() =>{
-        res.json({
-            message:"Student not created"
-        })
-    })
+    }
 }
 
-export function deleteStudent (req,res){
-    Student.deleteOne({name: req.body.name}).then(()=>{
+export async function deleteStudent (req,res){
+    try{
+        const result = await Student.deleteOne({name: req.body.name});
+        if(result.deletedCount === 0){
+            res.json({
+                message: "No student found with the given name"
+            });
+        }else{
+            res.json({
+                message: "student deleted succseefuly"
+            })
+        }
+    }catch(error){
         res.json({
-            message:"Student deleted successfully!"
+            message : "Error deleting student",
+            error:error.message
         })
-    })
+    }
+    
 }
