@@ -2,59 +2,74 @@ import User from "../models/user.js";
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
-export function createUser(req,res){
+export async function createUser(req, res) {
+    try {
+        const newUserData = req.body;
 
-    const newUserData = req.body
-    newUserData.password = bcrypt.hashSync(newUserData.password, 10)
+        newUserData.password = bcrypt.hashSync(newUserData.password, 10);
 
-    const user = new User(newUserData)
+        const user = new User(newUserData);
+        await user.save();
 
-    user.save().then(()=> {
         res.json({
-         message : "User saved successfully"
-        })
-    }).catch(()=>{
+            message: "User saved successfully"
+        });
+    } catch (error) {
         res.json({
-            message : "user not created" 
-        })
-    })
+            message: "User not created",
+            error: error.message
+        });
+    }
 }
 
-export function loginUser(req,res){
-    
-    User.find({email: req.body.email}).then((users)=>{
-        if(users.length == 0){
-            res.json({
+
+export async function loginUser(req, res) {
+    try {
+        // Find the user by email
+        const users = await User.find({ email: req.body.email });
+
+        // Check if the user exists
+        if (users.length === 0) {
+            return res.json({
                 message: "User Not Found"
-            }) 
-        }else{
-            const user = users[0]
-            const isPasswordCorrect = bcrypt.compareSync(req.body.password,user.password)
-
-            if(isPasswordCorrect){
-                
-                const token = jwt.sign({
-                    email : user.email,
-                    firstNmae : user.firstNmae,
-                    lastName : user.lastName,
-                    isBlocked: user.isBlocked,
-                    type : user.type,
-                    profilrPicture : user.profilrPicture
-                    
-                },"cbc-secret-key-2024")
-                console.log(token)
-
-                res.json({
-                    message : "User Loged in",
-                    token : token
-                })
-
-            }else{
-                res.json({
-                    message : "Password is wrong"
-                })
-            }
-
+            });
         }
-    })
+
+        const user = users[0];
+
+        // Compare the passwords
+        const isPasswordCorrect = bcrypt.compareSync(req.body.password, user.password);
+
+        if (isPasswordCorrect) {
+            // Generate a JWT token
+            const token = jwt.sign(
+                {
+                    email: user.email,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    isBlocked: user.isBlocked,
+                    type: user.type,
+                    profilePicture: user.profilePicture
+                },
+                "cbc-secret-key-2024"
+            );
+
+            console.log(token);
+
+            res.json({
+                message: "User logged in",
+                token: token
+            });
+        } else {
+            res.json({
+                message: "Password is wrong"
+            });
+        }
+    } catch (error) {
+        res.json({
+            message: "Error logging in",
+            error: error.message // Optional: provide error details for debugging
+        });
+    }
 }
+

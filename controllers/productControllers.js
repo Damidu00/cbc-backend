@@ -3,7 +3,7 @@ import Product from '../models/product.js';
 export async function createProduct(req, res) {
     try {
         console.log(req.user);
-
+        
         if (!req.user) {
             res.json({
                 message: "You are not logged in"
