@@ -1,7 +1,6 @@
 import bodyParser from 'body-parser';
 import express from 'express'
 import mongoose from 'mongoose'
-import studentRouter from './routes/studentRouter.js';
 import productRouter from './routes/productRouter.js';
 import userRouter from './routes/userRouter.js';
 import jwt from 'jsonwebtoken'
@@ -27,7 +26,7 @@ app.use((req,res,next)=>{
     const token = req.header("Authorization")?.replace("Bearer ","")
     
     if(token != null ){
-        jwt.verify(token,"cbc-secret-key-2024",(error,decoded)=>{
+        jwt.verify(token,process.env.SECRET,(error,decoded)=>{
             if(!error){
                 req.user = decoded
             }
