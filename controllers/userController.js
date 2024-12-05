@@ -9,6 +9,23 @@ export async function createUser(req, res) {
     try {
         const newUserData = req.body;
 
+        if(newUserData.type == "admin"){
+            if(req.user == null){
+                res.json({
+                    message:"please login as administrator to create admin account"
+                })
+                retun
+            }
+
+            if(req.user.type != "admin"){
+            
+                res.json({
+                    message:"please login as administrator to create admin account"
+                })
+                return
+            }
+        }
+
         newUserData.password = bcrypt.hashSync(newUserData.password, 10);
 
         const user = new User(newUserData);
@@ -28,10 +45,8 @@ export async function createUser(req, res) {
 
 export async function loginUser(req, res) {
     try {
-        // Find the user by email
         const users = await User.find({ email: req.body.email });
 
-        // Check if the user exists
         if (users.length === 0) {
             return res.json({
                 message: "User Not Found"
@@ -40,11 +55,10 @@ export async function loginUser(req, res) {
 
         const user = users[0];
 
-        // Compare the passwords
         const isPasswordCorrect = bcrypt.compareSync(req.body.password, user.password);
 
         if (isPasswordCorrect) {
-            // Generate a JWT token
+            
             const token = jwt.sign(
                 {
                     email: user.email,
@@ -71,7 +85,7 @@ export async function loginUser(req, res) {
     } catch (error) {
         res.json({
             message: "Error logging in",
-            error: error.message // Optional: provide error details for debugging
+            error: error.message
         });
     }
 }
