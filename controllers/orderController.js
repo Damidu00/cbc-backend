@@ -42,3 +42,16 @@ export async function createOrder(req,res){
         })
     }
 }
+
+export async function getOrders(req,res){
+    try {
+        const orders = await Order.find({email : req.user.email})
+
+        req.json(orders)
+
+    } catch (error) {
+        res.status(500).json({
+            message : error.message
+        })
+    }
+}
