@@ -38,3 +38,7 @@ export async function getProducts(req,res){
     })
    } 
 }
+
+export async function deleteProduct(req,res){
+    
+}
