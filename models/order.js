@@ -21,6 +21,10 @@ const orderSchema = mongoose.Schema({
             type : Number,
             required : true
         },
+        quentity : {
+            type : Number,
+            required : true
+        },
         image : {
             type : String,
             required : true
@@ -58,7 +62,7 @@ const orderSchema = mongoose.Schema({
     phone : {
         type : String,
         require : true
-    },
+    }
 
 })
 

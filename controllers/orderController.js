@@ -26,16 +26,26 @@ export async function createOrder(req,res){
         }
 
         const newOrderData = req.body
-        newOrderData.orderId = orderId
-        newOrderData.email = req.user.email
 
-        const order = new Order(newOrderData)
+        const newProductArray = []
+        for(let i=0;i<newOrderData.orderedItems.length;i++){
 
-        await order.save()
+        }
 
-        res.json({
-            message : "Order Plasede"
-        })
+
+
+
+
+        // newOrderData.orderId = orderId
+        // newOrderData.email = req.user.email
+
+        // const order = new Order(newOrderData)
+
+        // await order.save()
+
+        // res.json({
+        //     message : "Order Plasede"
+        // })
 
     } catch (error) {
         res.status(500).json({
@@ -47,7 +57,6 @@ export async function createOrder(req,res){
 export async function getOrders(req,res){
     try {
         const orders = await Order.find({email : req.user.email})
-        console.log(req.user)
         res.json(orders)
 
     } catch (error) {
