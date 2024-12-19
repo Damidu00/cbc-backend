@@ -90,7 +90,6 @@ export async function loginUser(req, res) {
     }
 }
 
-
 export function isAdmin(req){
     if(req.user == null){
         return false
@@ -111,5 +110,43 @@ export function isCustomer(req){
     }
 
     return false
+}
+
+export async function deleteUser(req,res){
+    try {
+        if(!isAdmin(req)){
+            return res.json({
+                message : "Only admins can delete users"
+            })
+        }
+
+        const userId = req.params.id;
+        
+        if(!userId){
+            return res.json({
+                message : "User Id is required"
+            })
+        }
+
+        const deletedUser = await User.findByIdAndDelete(userId);
+
+        if(!deletedUser){
+            res.json({
+                message : "user not found"
+            })
+        }
+        return
+
+        res.json({
+            message : "user deleteed successfully"
+        })
+
+
+    } catch (error) {
+        res.json({
+            error : error.message,
+            message : " error deleting user"
+        })
+    }
 }
 
