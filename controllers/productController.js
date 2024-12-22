@@ -45,10 +45,10 @@ export async function deleteProduct(req,res){
             message : "only admins can delete products"
         })
     }
-    const productId = req.params.productId;
+    const productId = req.params.id;
 
     try {
-        const deletedProduct = await Product.findOneAndDelete(productId)
+        const deletedProduct = await Product.findByIdAndDelete(productId)
 
         if(!deletedProduct){
             return res.json({
