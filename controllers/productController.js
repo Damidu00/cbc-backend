@@ -40,5 +40,28 @@ export async function getProducts(req,res){
 }
 
 export async function deleteProduct(req,res){
-    
+    if(!isAdmin(req)){
+        return res.json({
+            message : "only admins can delete products"
+        })
+    }
+    const productId = req.params.productId;
+
+    try {
+        const deletedProduct = await Product.findOneAndDelete(productId)
+
+        if(!deletedProduct){
+            return res.json({
+                message : "Product not found"
+            })
+        }
+
+        res.json({
+            message : "Product deleted successfully"
+        })
+    } catch (error) {
+        res.json({
+            error : error.message
+        })
+    }
 }
