@@ -131,11 +131,11 @@ export async function deleteUser(req,res){
         const deletedUser = await User.findByIdAndDelete(userId);
 
         if(!deletedUser){
-            res.json({
+            return res.json({
                 message : "user not found"
             })
         }
-        return
+        
 
         res.json({
             message : "user deleteed successfully"
@@ -149,4 +149,7 @@ export async function deleteUser(req,res){
         })
     }
 }
+
+
+
 
