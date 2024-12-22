@@ -39,6 +39,29 @@ export async function getProducts(req,res){
    } 
 }
 
+
+export async function getProductById(req,res){
+
+    const productId = req.params.id;
+    try {
+        const product = await Product.findById(productId)
+
+        if(!product){
+            return res.json({
+                message : "product not found"
+            })
+        }
+        res.json(product)
+
+    } catch (error) {
+        res.json({
+            error : error.message,
+            message : "Error retrieving product"
+        })
+    }
+
+}
+
 export async function deleteProduct(req,res){
     if(!isAdmin(req)){
         return res.json({
