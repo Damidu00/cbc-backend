@@ -157,12 +157,10 @@ export async function getAllUsers(req,res){
                 message : "only admin can see users"
             })
         }
-    
         const users = await User.find()
-    
         if(users.length === 0){
             return res.json({
-                message : "No users found "
+                message : "No users found"
             })
         }
     
