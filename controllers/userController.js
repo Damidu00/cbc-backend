@@ -112,7 +112,7 @@ export function isCustomer(req){
     return false
 }
 
-export async function deleteUser(req,res){
+export async function deleteUserById(req,res){
     try {
         if(!isAdmin(req)){
             return res.json({
@@ -135,12 +135,10 @@ export async function deleteUser(req,res){
                 message : "user not found"
             })
         }
-        
 
         res.json({
             message : "user deleteed successfully"
         })
-
 
     } catch (error) {
         res.json({
@@ -149,6 +147,7 @@ export async function deleteUser(req,res){
         })
     }
 }
+
 
 export async function getAllUsers(req,res){
     try {
