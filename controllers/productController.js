@@ -108,7 +108,7 @@ export async function updateProduct(req,res){
 
         if(!updatedProduct){
             return res.json({
-                message : "product not found to update by given id"
+                message : "product not found in given id"
             })
         }
 
