@@ -88,3 +88,38 @@ export async function deleteProduct(req,res){
         })
     }
 }
+
+export async function updateProduct(req,res){
+    if(!isAdmin(req)){
+        return res.json({
+            message : "only admin can update a product"
+        })
+    }
+
+    const productId = req.params.id;
+    const updatedData = req.body;
+
+    try {
+        const updatedProduct = await Product.findByIdAndUpdate(
+            productId,
+            updatedData,
+            {new : true}
+        )
+
+        if(!updatedProduct){
+            return res.json({
+                message : "product not found to update by given id"
+            })
+        }
+
+        res.json({
+            message : "Product Updated successfully"
+        })
+
+    } catch (error) {
+        res.json({
+            error : error.message,
+            message : "cannot update product"
+        })
+    }
+}
