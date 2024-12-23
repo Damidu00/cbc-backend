@@ -150,6 +150,33 @@ export async function deleteUser(req,res){
     }
 }
 
+export async function getAllUsers(req,res){
+    try {
+        if(!isAdmin(req)){
+            return res.json({
+                message : "only admin can see users"
+            })
+        }
+    
+        const users = await User.find()
+    
+        if(users.length === 0){
+            return res.json({
+                message : "No users found "
+            })
+        }
+    
+        res.json({
+            users : users
+        })
+    } catch (error) {
+        res.json({
+            message : "error fetching users",
+            error : error.message
+        })
+    }
+}
+
 
 
 
