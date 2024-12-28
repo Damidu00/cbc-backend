@@ -49,7 +49,7 @@ export async function loginUser(req, res) {
 
         if (users.length === 0) {
             return res.json({
-                message: "User Not Found"
+                message: "User Not Found..Please User Correct Email 😏"
             });
         }
 
@@ -74,12 +74,19 @@ export async function loginUser(req, res) {
             console.log(token);
 
             res.json({
-                message: "User logged in",
-                token: token
+                message: "You Loged In succsessfully",
+                token: token,
+                user : {
+                    firstName : user.firstName,
+                    lastName: user.lastName,
+                    type: user.type,
+                    profilePicture: user.profilePicture,
+                    email : user.email
+                }
             });
         } else {
             res.json({
-                message: "Password is wrong"
+                message: "Password is wrong..please try with correct password 😊👍"
             });
         }
     } catch (error) {
