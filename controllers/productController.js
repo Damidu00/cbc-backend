@@ -19,7 +19,7 @@ export async function createProduct(req,res){
             message : "product Created successfully"
         })
     } catch (error) {
-        res.json({
+        res.status(403).json({
             message : "product not created",
             error : error.message
         })
