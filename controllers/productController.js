@@ -15,11 +15,11 @@ export async function createProduct(req,res){
 
     try {
         await product.save();
-        res.json({
+        return res.json({
             message : "product Created successfully"
         })
     } catch (error) {
-        res.status(403).json({
+        return res.status(403).json({
             message : "product not created",
             error : error.message
         })
