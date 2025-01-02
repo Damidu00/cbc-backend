@@ -62,32 +62,28 @@ export async function getProductById(req,res){
 
 }
 
-export async function deleteProduct(req,res){
-    if(!isAdmin(req)){
-        return res.json({
-            message : "only admins can delete products"
-        })
-    }
-    const productId = req.params.id;
-
+export async function deleteProduct(req, res) {
     try {
-        const deletedProduct = await Product.findByIdAndDelete(productId)
-
-        if(!deletedProduct){
-            return res.json({
-                message : "Product not found"
-            })
-        }
-
-        res.json({
-            message : "Product deleted successfully"
-        })
+      if (!isAdmin(req)) {
+        return res.status(403).json({
+          message: "Please login as administrator to delete products"
+        });
+      }
+  
+      const productId = req.params.productId;
+  
+      await Product.deleteOne({ productId: productId });
+  
+      res.json({
+        message: "Product deleted"
+      });
     } catch (error) {
-        res.json({
-            error : error.message
-        })
+      res.status(403).json({
+        message: error.message || error
+      });
     }
-}
+  }
+  
 
 export async function updateProduct(req,res){
     if(!isAdmin(req)){
