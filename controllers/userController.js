@@ -116,7 +116,7 @@ export function isCustomer(req){
         return false
     }
 
-    return false
+    return true
 }
 
 export async function deleteUserById(req,res){
