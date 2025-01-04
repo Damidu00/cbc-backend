@@ -5,7 +5,7 @@ export async function createProduct(req,res){
 
     if(!isAdmin(req)){
         res.json({
-            message : "Login as admin to create a product"
+            message : "Login as admin to create a product😏"
         })
         return
     }
@@ -16,11 +16,11 @@ export async function createProduct(req,res){
     try {
         await product.save();
         return res.json({
-            message : "product Created successfully"
+            message : "product Created successfully😮‍💨"
         })
     } catch (error) {
         return res.status(403).json({
-            message : "product not created",
+            message : "product not created🧐",
             error : error.message
         })
         
@@ -33,7 +33,7 @@ export async function getProducts(req,res){
     res.json(products)
    } catch (error) {
     res.json({
-        message : "cannot get products",
+        message : "cannot get products🧐",
         error : error.message
     })
    } 
@@ -48,7 +48,7 @@ export async function getProductById(req,res){
 
         if(!product){
             return res.json({
-                message : "product not found"
+                message : "product not found🧐"
             })
         }
         res.json(product)
@@ -56,7 +56,7 @@ export async function getProductById(req,res){
     } catch (error) {
         res.json({
             error : error.message,
-            message : "Error retrieving product"
+            message : "Error retrieving product🫡"
         })
     }
 
@@ -66,7 +66,7 @@ export async function deleteProduct(req, res) {
     try {
       if (!isAdmin(req)) {
         return res.status(403).json({
-          message: "Please login as administrator to delete products"
+          message: "Please login as administrator to delete products😏"
         });
       }
   
@@ -75,7 +75,7 @@ export async function deleteProduct(req, res) {
       await Product.deleteOne({ productId: productId });
   
       res.json({
-        message: "Product deleted"
+        message: "Product deleted😮‍💨"
       });
     } catch (error) {
       res.status(403).json({
@@ -88,7 +88,7 @@ export async function deleteProduct(req, res) {
 export async function updateProduct(req,res){
     if(!isAdmin(req)){
         return res.json({
-            message : "only admin can update a product"
+            message : "only admin can update a product🫡"
         })
     }
 
@@ -104,18 +104,18 @@ export async function updateProduct(req,res){
 
         if(!updatedProduct){
             return res.json({
-                message : "product not found in given id"
+                message : "product not found in given id😕"
             })
         }
 
         res.json({
-            message : "Product Updated successfully"
+            message : "Product Updated successfully😮‍💨"
         })
 
     } catch (error) {
         res.json({
             error : error.message,
-            message : "cannot update product"
+            message : "cannot update product😊"
         })
     }
 }
