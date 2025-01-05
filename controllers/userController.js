@@ -12,7 +12,7 @@ export async function createUser(req, res) {
         if(newUserData.type == "admin"){
             if(req.user == null){
                 res.json({
-                    message:"please login as administrator to create admin account"
+                    message:"please login as administrator to create admin account😏"
                 })
                 retun
             }
@@ -20,7 +20,7 @@ export async function createUser(req, res) {
             if(req.user.type != "admin"){
             
                 res.json({
-                    message:"please login as administrator to create admin account"
+                    message:"please login as administrator to create admin account😏"
                 })
                 return
             }
@@ -32,11 +32,11 @@ export async function createUser(req, res) {
         await user.save();
 
         res.json({
-            message: "User saved successfully"
+            message: "User saved successfully😮‍💨"
         });
     } catch (error) {
         res.json({
-            message: "User not created",
+            message: "User not created😕",
             error: error.message
         });
     }
@@ -74,7 +74,7 @@ export async function loginUser(req, res) {
             console.log(token);
 
             res.json({
-                message: "You Loged In succsessfully",
+                message: "You Loged In succsessfully😮‍💨",
                 token: token,
                 user : {
                     firstName : user.firstName,
@@ -91,7 +91,7 @@ export async function loginUser(req, res) {
         }
     } catch (error) {
         res.json({
-            message: "Error logging in",
+            message: "Error logging in😕",
             error: error.message
         });
     }
@@ -123,7 +123,7 @@ export async function deleteUserById(req,res){
     try {
         if(!isAdmin(req)){
             return res.json({
-                message : "Only admins can delete users"
+                message : "Only admins can delete users😏"
             })
         }
 
@@ -131,7 +131,7 @@ export async function deleteUserById(req,res){
         
         if(!userId){
             return res.json({
-                message : "User Id is required"
+                message : "User Id is required🧐"
             })
         }
 
@@ -139,18 +139,18 @@ export async function deleteUserById(req,res){
 
         if(!deletedUser){
             return res.json({
-                message : "user not found"
+                message : "user not found🧐"
             })
         }
 
         res.json({
-            message : "user deleteed successfully"
+            message : "user deleteed successfully😮‍💨"
         })
 
     } catch (error) {
         res.json({
             error : error.message,
-            message : " error deleting user"
+            message : " error deleting user😕"
         })
     }
 }
@@ -160,13 +160,13 @@ export async function getAllUsers(req,res){
     try {
         if(!isAdmin(req)){
             return res.json({
-                message : "only admin can see users"
+                message : "only admin can see users😕"
             })
         }
         const users = await User.find()
         if(users.length === 0){
             return res.json({
-                message : "No users found"
+                message : "No users found😕"
             })
         }
     
@@ -175,7 +175,7 @@ export async function getAllUsers(req,res){
         })
     } catch (error) {
         res.json({
-            message : "error fetching users",
+            message : "error fetching users😕",
             error : error.message
         })
     }
