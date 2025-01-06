@@ -6,7 +6,7 @@ export async function createOrder(req,res){
 
     if(!isCustomer){
         res.json({
-            message : "login as customer to plase order"
+            message : "login as customer to place order😏"
         })
     }
 
@@ -42,7 +42,7 @@ export async function createOrder(req,res){
             
             if(product == null){
                 res.json({
-                    message : "product with id "+newOrderData.orderedItems[i].productId+" Not found"
+                    message : "product with id "+newOrderData.orderedItems[i].productId+" Not found🧐"
                 })
                 return 
             }
@@ -69,7 +69,7 @@ export async function createOrder(req,res){
         await order.save()
 
         res.json({
-            message : "Order Plasede"
+            message : "Order Plasede😮‍💨"
         })
 
         
