@@ -7,6 +7,7 @@ import jwt from 'jsonwebtoken'
 import dotenv from "dotenv"
 import orderRouter from './routes/orderRouter.js';
 import cors from 'cors'
+import contactUsRouter from './routes/contactUsRouter.js';
 
 dotenv.config()
 
@@ -43,7 +44,7 @@ app.use((req,res,next)=>{
 app.use("/api/users",userRouter)
 app.use("/api/products",productRouter)
 app.use("/api/orders",orderRouter)
-
+app.use("/api/contactUs",contactUsRouter)
 
 app.listen(5000,() =>{
     console.log('Server is running on port 5000')
