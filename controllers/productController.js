@@ -92,14 +92,13 @@ export async function updateProduct(req,res){
         })
     }
 
-    const productId = req.params.id;
-    const updatedData = req.body;
+    const productId = req.params.productId;
+    const newProductData = req.body;
 
     try {
-        const updatedProduct = await Product.findByIdAndUpdate(
-            productId,
-            updatedData,
-            {new : true}
+        const updatedProduct = await Product.updateOne(
+            {productId : productId},
+            newProductData
         )
 
         if(!updatedProduct){
