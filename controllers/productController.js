@@ -54,7 +54,7 @@ export async function getProductById(req,res){
         res.json(product)
 
     } catch (error) {
-        res.json({
+        res.status(500).json({
             error : error.message,
             message : "Error retrieving product🫡"
         })
