@@ -46,11 +46,11 @@ export async function getProductById(req,res){
     try {
         const product = await Product.findOne({productId : productId})
 
-        if(!product){
-            return res.json({
-                message : "product not found🧐"
-            })
-        }
+        // if(!product){
+        //     return res.json({
+        //         message : "product not found"
+        //     })
+        // }
         res.json(product)
 
     } catch (error) {
