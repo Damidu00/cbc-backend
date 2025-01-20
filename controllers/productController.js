@@ -42,9 +42,9 @@ export async function getProducts(req,res){
 
 export async function getProductById(req,res){
 
-    const productId = req.params.id;
+    const productId = req.params.productId;
     try {
-        const product = await Product.findById(productId)
+        const product = await Product.findOne({productId : productId})
 
         if(!product){
             return res.json({
