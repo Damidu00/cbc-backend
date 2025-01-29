@@ -103,6 +103,7 @@ export async function getQuote(req,res){
         const newProductArray = []
         let total = 0;
         let labeledTotal = 0;
+        console.log(req.body)
 
         for(let i=0;i<newOrderData.orderedItems.length;i++){
             console.log(req.body.orderedItems[i])
