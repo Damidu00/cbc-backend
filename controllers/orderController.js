@@ -49,8 +49,8 @@ export async function createOrder(req,res){
 
             newProductArray[i] = {
                 name : product.productName,
-                price : product.price,
-                quentity : newOrderData.orderedItems[i].quantity,
+                price : product.lastPrice,
+                quentity : newOrderData.orderedItems[i].qty,
                 image : product.images[0]
             }
 
@@ -120,14 +120,14 @@ export async function getQuote(req,res){
                 })
                 return 
             }
-            labeledTotal += product.price * newOrderData.orderedItems[i].quantity;
-            total += product.lastPrice * newOrderData.orderedItems[i].quantity;
+            labeledTotal += product.price * newOrderData.orderedItems[i].qty;
+            total += product.lastPrice * newOrderData.orderedItems[i].qty;
 
             newProductArray[i] = {
                 name : product.productName,
                 price : product.lastPrice,
                 labeledPrice:product.price,
-                quentity : newOrderData.orderedItems[i].quantity,
+                quentity : newOrderData.orderedItems[i].qty,
                 image : product.images[0]
             }
 
