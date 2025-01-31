@@ -24,3 +24,19 @@ export async function createFeedback(req,res){
         })
     }
 }
+
+export async function getAllFeedbacks(req,res){
+
+    try {
+        const feedbacks = await Feedback.find();
+
+        res.status(200).json({
+            feedbacks
+        })
+    } catch (error) {
+        res.json({
+            error: error.message,
+            message : "Error to fetch feedbacks"
+        })
+    }
+}
