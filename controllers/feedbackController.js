@@ -45,7 +45,7 @@ export async function adminReply(req,res){
     try {
         const {feedbackId,adminId,message} = req.body;
 
-        const feedback = await Feedback.findById(feedbackId);
+        const feedback = await Feedback.findOne({feedbackId});
 
         if(!feedback){
             return res.status(404).json({
@@ -62,12 +62,12 @@ export async function adminReply(req,res){
 
         await feedback.save()
 
-        res.status(2001).json({
+        res.status(200).json({
             message : "Admin reply addd successfully!😊"
         })
 
     } catch (error) {
-        res.json(500).json({
+        res.status(500).json({
             message : "error with repling",
             error : error.message
         })
