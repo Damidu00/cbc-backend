@@ -2,9 +2,10 @@ import Feedback from "../models/feedback.js";
 
 export async function createFeedback(req,res){
     try {
-        const {userName , message} = req.body;
+        const {feedbackId , userName , message} = req.body;
 
         const newFeedback = new Feedback({
+            feedbackId,
             userName,
             message
         });
@@ -17,7 +18,7 @@ export async function createFeedback(req,res){
         })
 
     } catch (error) {
-        res.json({
+        res.status(500).json({
             error : error.message,
             message : "Cannot send feedback"
         })

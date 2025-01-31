@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const FeedbackShema = mongoose.Schema({
     feedbackId : {
         type : String,
-        required : true,
+        // required : true,
         unique: true
     },
     userName : {
