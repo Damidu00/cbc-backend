@@ -1,5 +1,5 @@
 import Order from "../models/order.js";
-import { isCustomer } from "./userController.js";
+import { isAdmin, isCustomer } from "./userController.js";
 import Product from "../models/product.js";
 
 export async function createOrder(req,res){
@@ -66,10 +66,11 @@ export async function createOrder(req,res){
 
         const order = new Order(newOrderData)
 
-        await order.save()
+        const savedOrder = await order.save()
 
         res.json({
-            message : "Order Plasede😮‍💨"
+            message : "Order Plasede😮‍💨",
+            order : savedOrder
         })
 
         
@@ -82,8 +83,20 @@ export async function createOrder(req,res){
 
 export async function getOrders(req,res){
     try {
-        const orders = await Order.find({email : req.user.email})
-        res.json(orders)
+        if(isCustomer(req)){
+            const orders = await Order.find({email : req.user.email})
+            res.json(orders)
+            return;
+        }else if(isAdmin(req)){
+            const orders = await Order.find([]);
+            res.json(orders);
+            return;
+        }else{
+            res.json({
+                message: "please login to view orders"
+            })
+        }
+       
 
     } catch (error) {
         res.status(500).json({
