@@ -1,4 +1,4 @@
-import Feedback from "../models/feedback";
+import Feedback from "../models/feedback.js";
 
 export async function createFeedback(req,res){
     try {

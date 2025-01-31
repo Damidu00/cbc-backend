@@ -8,6 +8,7 @@ import dotenv from "dotenv"
 import orderRouter from './routes/orderRouter.js';
 import cors from 'cors'
 import contactUsRouter from './routes/contactUsRouter.js';
+import feedbackRouter from './routes/feedbackRouter.js';
 
 dotenv.config()
 
@@ -45,6 +46,7 @@ app.use("/api/users",userRouter)
 app.use("/api/products",productRouter)
 app.use("/api/orders",orderRouter)
 app.use("/api/contactus",contactUsRouter)
+app.use("/api/feedbacks",feedbackRouter)
 
 app.listen(5000,() =>{
     console.log('Server is running on port 5000')
