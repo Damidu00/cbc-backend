@@ -40,3 +40,36 @@ export async function getAllFeedbacks(req,res){
         })
     }
 }
+
+export async function adminReply(req,res){
+    try {
+        const {feedbackId,adminId,message} = req.body;
+
+        const feedback = await Feedback.findById(feedbackId);
+
+        if(!feedback){
+            return res.status(404).json({
+                message : "Feedback not found"
+            })
+        }
+
+        feedback.adminReply.push({
+            adminId,
+            message
+        })
+
+        feedback.status = 'replied'
+
+        await feedback.save()
+
+        res.status(2001).json({
+            message : "Admin reply addd successfully!😊"
+        })
+
+    } catch (error) {
+        res.json(500).json({
+            message : "error with repling",
+            error : error.message
+        })
+    }
+}
