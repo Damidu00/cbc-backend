@@ -41,35 +41,36 @@ export async function getAllFeedbacks(req,res){
     }
 }
 
-export async function adminReply(req,res){
+export async function adminReply(req, res) {
     try {
-        const {feedbackId,adminId,message} = req.body;
+        const { feedbackId, adminId, message } = req.body;
 
-        const feedback = await Feedback.findOne({feedbackId});
+        const feedback = await Feedback.findOne({ feedbackId });
 
-        if(!feedback){
+        if (!feedback) {
             return res.status(404).json({
-                message : "Feedback not found"
-            })
+                message: "Feedback not found"
+            });
         }
 
-        feedback.adminReply.push({
-            adminId,
-            message
-        })
 
-        feedback.status = 'replied'
+        feedback.adminReply = {
+            message,
+            time: new Date() 
+        };
 
-        await feedback.save()
+        feedback.status = 'replied'; 
+
+        await feedback.save();
 
         res.status(200).json({
-            message : "Admin reply addd successfully!😊"
-        })
+            message: "Admin reply added successfully! 😊"
+        });
 
     } catch (error) {
         res.status(500).json({
-            message : "error with repling",
-            error : error.message
-        })
+            message: "Error with replying",
+            error: error.message
+        });
     }
 }

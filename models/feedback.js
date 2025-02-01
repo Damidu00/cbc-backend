@@ -23,12 +23,8 @@ const FeedbackShema = mongoose.Schema({
         enum : ['pending','replied'],
         default : 'pending'
     },
-    adminReply : [
+    adminReply : 
         {
-            adminId : {
-                type : mongoose.Schema.Types.ObjectId,
-                ref : 'users'
-            },
             message : {
                 type : String
             },
@@ -37,7 +33,6 @@ const FeedbackShema = mongoose.Schema({
                 default : Date.now
             }
         }
-    ]
 
 })
 
