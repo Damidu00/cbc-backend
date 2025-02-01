@@ -1,29 +1,43 @@
 import Feedback from "../models/feedback.js";
 
-export async function createFeedback(req,res){
+export async function createFeedback(req, res) {
     try {
-        const {feedbackId , userName , message} = req.body;
+        const { userName, message } = req.body;
+
+
+        const latestFeedback = await Feedback.findOne().sort({ feedbackId: -1 });
+
+        let newFeedbackId = "F0001"; 
+
+        if (latestFeedback) {
+  
+            let lastIdNum = parseInt(latestFeedback.feedbackId.substring(1)); 
+            let nextIdNum = lastIdNum + 1;
+            newFeedbackId = `F${nextIdNum.toString().padStart(4, "0")}`; 
+        }
+
 
         const newFeedback = new Feedback({
-            feedbackId,
+            feedbackId: newFeedbackId,
             userName,
             message
         });
 
-        await newFeedback.save()
+        await newFeedback.save();
 
         res.status(201).json({
-            message : "Feedback created succsessfully",
-            feedback : newFeedback
-        })
+            message: "Feedback created successfully",
+            feedback: newFeedback
+        });
 
     } catch (error) {
         res.status(500).json({
-            error : error.message,
-            message : "Cannot send feedback"
-        })
+            error: error.message,
+            message: "Cannot send feedback"
+        });
     }
 }
+
 
 export async function getAllFeedbacks(req,res){
 
