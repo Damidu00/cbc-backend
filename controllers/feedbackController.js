@@ -118,18 +118,25 @@ export async function adminReply(req, res) {
 }
 
 
-export async function deleteFeedback(){
+export async function deleteFeedback(req,res){
 
     try {
-        if(isAdmin(req)){
-            return res.status(403).json({
-                message : "Only admin can delete the feedback"
-            })
-        }
 
         const feedbackId = req.params.feedbackId;
 
-        await Feedback.deleteOne({feedbackId : feedbackId})
+        if(!feedbackId){
+            return res.status(404).json({
+                message : "Feedback id is required"
+            })
+        }
+
+        const response = await Feedback.deleteOne({feedbackId : feedbackId})
+
+        if(response.deletedCount === 0){
+            return res.status(404).json({
+                message: "Feedback not found"
+            });
+        }
 
         res.status(200).json({
             message : "Feedback Deleted Succsessfully"
@@ -137,7 +144,8 @@ export async function deleteFeedback(){
 
     } catch (error) {
         res.status(500).json({
-            message : "Error when deleting the feedback"
+            message : "Error when deleting the feedback",
+            error : error.message
         })
     }
 }
