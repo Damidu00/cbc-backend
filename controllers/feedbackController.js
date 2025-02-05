@@ -1,5 +1,6 @@
 import Feedback from "../models/feedback.js";
 import User from "../models/user.js";
+import { isAdmin } from "./userController.js";
 
 export async function createFeedback(req, res) {
     try {
@@ -113,5 +114,30 @@ export async function adminReply(req, res) {
             message: "Error with replying",
             error: error.message
         });
+    }
+}
+
+
+export async function deleteFeedback(){
+
+    try {
+        if(isAdmin(req)){
+            return res.status(403).json({
+                message : "Only admin can delete the feedback"
+            })
+        }
+
+        const feedbackId = req.params.feedbackId;
+
+        await Feedback.deleteOne({feedbackId : feedbackId})
+
+        res.status(200).json({
+            message : "Feedback Deleted Succsessfully"
+        })
+
+    } catch (error) {
+        res.status(500).json({
+            message : "Error when deleting the feedback"
+        })
     }
 }
