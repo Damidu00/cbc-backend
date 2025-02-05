@@ -4,11 +4,12 @@ const FeedbackShema = mongoose.Schema({
     feedbackId : {
         type : String,
         // required : true,
-        unique: true
+        unique: true,
+        
     },
-    userName : {
+    userId : {
         type : String,
-        required : true
+        required : false
     },
     message : {
         type : String,
@@ -24,7 +25,7 @@ const FeedbackShema = mongoose.Schema({
         default : 'pending'
     },
     adminReply : 
-        {
+        [{
             message : {
                 type : String
             },
@@ -33,6 +34,7 @@ const FeedbackShema = mongoose.Schema({
                 default : Date.now
             }
         }
+    ]
 
 })
 

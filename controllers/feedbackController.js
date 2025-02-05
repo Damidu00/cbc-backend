@@ -1,11 +1,21 @@
 import Feedback from "../models/feedback.js";
+import User from "../models/user.js";
 
 export async function createFeedback(req, res) {
     try {
-        const { userName, message } = req.body;
+        const { message } = req.body;
+        const authUserEmail = req.user.email;
 
+        //validate
+        var userId = null;
+        try{
+            const userResult = await User.findOne({email:authUserEmail});
+            userId = userResult._id.toString();
+        }catch(error){
+            return res.send("Invalid user id");
+        }
 
-        const latestFeedback = await Feedback.findOne().sort({ feedbackId: -1 });
+        const latestFeedback = await Feedback.findOne().sort({ time: -1 });
 
         let newFeedbackId = "F0001"; 
 
@@ -14,12 +24,14 @@ export async function createFeedback(req, res) {
             let lastIdNum = parseInt(latestFeedback.feedbackId.substring(1)); 
             let nextIdNum = lastIdNum + 1;
             newFeedbackId = `F${nextIdNum.toString().padStart(4, "0")}`; 
+            
         }
+        
 
 
         const newFeedback = new Feedback({
+            userId: userId,
             feedbackId: newFeedbackId,
-            userName,
             message
         });
 
@@ -42,11 +54,26 @@ export async function createFeedback(req, res) {
 export async function getAllFeedbacks(req,res){
 
     try {
-        const feedbacks = await Feedback.find();
+        var feedbacks = await Feedback.find();
 
-        res.status(200).json({
-            feedbacks
-        })
+        var response =[];
+        for(var i = 0; i < feedbacks.length; i++){
+
+            var feedBack = feedbacks[i].toObject();
+            const feedUid = feedBack.userId;
+
+            const userDetails = await User.findById(feedUid);
+            const name = userDetails.firstName+" "+userDetails.lastName;
+
+            feedBack.user_name = name;
+
+            console.log(feedBack);
+            
+            response.push(feedBack);
+
+        }
+
+        res.status(200).json({feedbacks: response})
     } catch (error) {
         res.json({
             error: error.message,
@@ -68,10 +95,10 @@ export async function adminReply(req, res) {
         }
 
 
-        feedback.adminReply = {
+        feedback.adminReply.push({
             message,
             time: new Date() 
-        };
+        });
 
         feedback.status = 'replied'; 
 
