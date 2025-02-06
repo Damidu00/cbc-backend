@@ -1,6 +1,11 @@
 import mongoose from "mongoose";
 
 const productFeedbackSchema = mongoose.Schema({
+
+    productFeedbackId : {
+        type : String,
+        required : true
+    },
     productId : {
         type : String,
         required : true
