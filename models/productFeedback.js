@@ -24,11 +24,11 @@ const productFeedbackSchema = mongoose.Schema({
         default : 'pending'
     },
     time : {
-        type : Date(),
+        type : Date,
         default : Date.now
     }
 
 })
 
-const productFeedback = mongoose.model("productFeedbacks",productFeedbackSchema)
-export default productFeedback;
+const ProductFeedback = mongoose.model("productFeedbacks",productFeedbackSchema)
+export default ProductFeedback

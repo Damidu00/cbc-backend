@@ -1,4 +1,4 @@
-import productFeedback from "../models/productFeedback";
+import productFeedback from '../models/productFeedback.js'
 
 export async function createProductFeedback(req,res){
 
