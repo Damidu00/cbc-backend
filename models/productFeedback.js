@@ -14,6 +14,10 @@ const productFeedbackSchema = mongoose.Schema({
         type : String,
         required : true
     },
+    userName: {
+        type : String,
+        required : true
+    },
     message : {
         type : String,
         required : true
