@@ -3,6 +3,6 @@ import { createProductFeedback } from '../controllers/productFeedbackController.
 
 const productFeedbackRouter = express.Router()
 
-productFeedbackRouter.post("/",createProductFeedback)
+productFeedbackRouter.post("/:productId",createProductFeedback)
 
 export default productFeedbackRouter
