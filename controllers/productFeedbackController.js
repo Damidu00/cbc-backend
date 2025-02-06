@@ -17,10 +17,12 @@ export async function createProductFeedback(req,res){
         }
         const authUserEmail = req.user.email
         let userId = null;
+        let userName = null;
+
         try {
             const userResult = await User.findOne({email : authUserEmail})
             userId = userResult._id.toString();
-            const userName = userResult.firstName + " " + userResult.lastName
+            userName = userResult.firstName + " " + userResult.lastName
             console.log(userName)
         } catch (error) {
             res.json({
@@ -28,12 +30,11 @@ export async function createProductFeedback(req,res){
             })
         }
 
-
         const latestFeedback = await ProductFeedback.findOne().sort({time : -1})
         let newFeedbackId = "PF0001";
 
         if(latestFeedback){
-            let lastIdNum = parseInt(latestFeedback.feedbackId.substring(1)); 
+            let lastIdNum = parseInt(latestFeedback.productFeedbackId.substring(2)); 
             let nextIdNum = lastIdNum + 1;
             newFeedbackId = `PF${nextIdNum.toString().padStart(4, "0")}`; 
         }
@@ -43,6 +44,7 @@ export async function createProductFeedback(req,res){
             userId : userId,
             productFeedbackId : newFeedbackId,
             productId : productId,
+            userName : userName,
             message
         })
 
