@@ -61,3 +61,15 @@ export async function createProductFeedback(req,res){
         })
     }
 }
+
+
+export async function getAllProductFeedbacks(req,res){
+    try {
+        const productFeedbacks = await ProductFeedback.find()
+        res.status(200).json(productFeedbacks)
+    } catch (error) {
+        res.status(500).json({
+            error : error.message
+        })
+    }
+}
