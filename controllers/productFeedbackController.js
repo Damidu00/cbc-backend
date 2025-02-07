@@ -76,7 +76,7 @@ export async function getProductFeedbackById(req,res){
     const productId = req.params.productId
     
     try {
-        const productFeedback = await ProductFeedback.findOne({productId : productId})
+        const productFeedback = await ProductFeedback.find({productId : productId})
         res.status(200).json(productFeedback)
     } catch (error) {
         res.status(500).json({
