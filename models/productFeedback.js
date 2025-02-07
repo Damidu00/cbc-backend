@@ -22,6 +22,12 @@ const productFeedbackSchema = mongoose.Schema({
         type : String,
         required : true
     },
+    rating : {
+        type : Number,
+        min : 1,
+        max : 5,
+        required : true
+    },
     status : {
         type : String,
         enum : ['pending', 'active'],

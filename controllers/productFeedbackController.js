@@ -73,3 +73,8 @@ export async function getAllProductFeedbacks(req,res){
         })
     }
 }
+
+export async function getProductFeedbackById(req,res){
+    const productId = req.params.productId
+    console.log(productId)
+}
