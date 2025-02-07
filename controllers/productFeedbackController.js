@@ -74,5 +74,14 @@ export async function getAllProductFeedbacks(req,res){
 
 export async function getProductFeedbackById(req,res){
     const productId = req.params.productId
-    console.log(productId)
+    
+    try {
+        const productFeedback = await ProductFeedback.findOne({productId : productId})
+        res.status(200).json(productFeedback)
+    } catch (error) {
+        res.status(500).json({
+            message : "Error with productFeedback",
+            error : error.message
+        })
+    }
 }
