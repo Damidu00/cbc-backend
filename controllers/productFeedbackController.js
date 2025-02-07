@@ -86,7 +86,7 @@ export async function getProductFeedbackById(req,res){
     }
 }
 
-export async function deleteFeedback(req,res){
+export async function deleteProductFeedback(req,res){
     try {
         const productId = req.params.productId
 
