@@ -85,3 +85,19 @@ export async function getProductFeedbackById(req,res){
         })
     }
 }
+
+export async function deleteFeedback(req,res){
+    try {
+        const productId = req.params.productId
+
+        await ProductFeedback.deleteOne({ productId : productId })
+
+        res.status(200).json({
+            message : "Product deleted successfully"
+        })
+    } catch (error) {
+        res.status(500).json({
+            error: error.message
+        })
+    }
+}
