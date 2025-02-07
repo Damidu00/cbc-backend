@@ -4,11 +4,8 @@ import User from '../models/user.js';
 export async function createProductFeedback(req,res){
 
     try {
-        const { message } = req.body;
-        console.log(message)
+        const { message,rating  } = req.body;
         const productId = req.params.productId
-        console.log(productId)
-        
 
         if(!productId){
             return res.status(404).json({
@@ -23,7 +20,7 @@ export async function createProductFeedback(req,res){
             const userResult = await User.findOne({email : authUserEmail})
             userId = userResult._id.toString();
             userName = userResult.firstName + " " + userResult.lastName
-            console.log(userName)
+
         } catch (error) {
             res.json({
                 message : "invalid user"
@@ -38,14 +35,15 @@ export async function createProductFeedback(req,res){
             let nextIdNum = lastIdNum + 1;
             newFeedbackId = `PF${nextIdNum.toString().padStart(4, "0")}`; 
         }
-        console.log(newFeedbackId)
+
 
         const newproductFeedback = new ProductFeedback({
             userId : userId,
             productFeedbackId : newFeedbackId,
             productId : productId,
             userName : userName,
-            message
+            message,
+            rating
         })
 
         await newproductFeedback.save()
