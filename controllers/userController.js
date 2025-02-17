@@ -180,3 +180,26 @@ export async function getAllUsers(req,res){
         })
     }
 }
+
+export async function googleLogin(req,res){
+    //https://www.googleapis.com/oauth2/v3/userinfo
+
+    const token = req.body.token
+    try {
+        const response = await axios.get("https://www.googleapis.com/oauth2/v3/userinfo",{
+            headers : {
+                Authorization : `Bearer ${token}`
+            }
+        })
+        res.json({
+            message : "Google login Succsessfull",
+            user : response.data
+        })
+    } catch (error) {
+        res.json({
+            message : "Google login failed",
+            error : error.message
+        })
+    }
+
+}
