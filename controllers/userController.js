@@ -249,4 +249,18 @@ export async function googleLogin(req,res){
       }
   }
 
-  
+  export async function getUser(req,res){
+    try {
+        if(req.user == null){
+            res.status(404).json({
+                message : "please login to view user details"
+            })
+            return;
+        }
+        res.json(req.user)
+    } catch (error) {
+        res.json({
+            error: error.message
+        })
+    }
+  }
