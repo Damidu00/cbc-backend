@@ -136,16 +136,3 @@ export async function searchProducts(req, res) {
       });
     }
   }
-
-  export async function getLatestProducts(req, res) {
-    try {
-        const latestProducts = await Product.find().sort({ time: -1 }).limit(4);
-        res.json(latestProducts);
-    } catch (error) {
-        res.status(500).json({
-            message: "Cannot fetch latest products🧐",
-            error: error.message
-        });
-    }
-}
-
