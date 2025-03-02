@@ -65,13 +65,8 @@ export async function getAllFeedbacks(req,res){
 
             const userDetails = await User.findById(feedUid);
             const name = userDetails.firstName+" "+userDetails.lastName;
-
-            feedBack.user_name = name;
-
-            console.log(feedBack);
-            
+            feedBack.user_name = name;           
             response.push(feedBack);
-
         }
 
         res.status(200).json({feedbacks: response})
