@@ -7,7 +7,7 @@ userRouter.get("/",getUser)
 userRouter.post("/",createUser)
 userRouter.post("/login",loginUser)
 userRouter.delete("/:id",deleteUserById)
-userRouter.get("/",getAllUsers)
+userRouter.get("/allusers",getAllUsers)
 userRouter.post("/google",googleLogin)
 
 
